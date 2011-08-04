@@ -46,6 +46,7 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.provider.Settings;
 
 public class ThemeChooser extends Activity {
     private static final String TAG = ThemeChooser.class.getSimpleName();
@@ -237,6 +238,12 @@ public class ThemeChooser extends Activity {
         } else {
             Themes.changeTheme(ThemeChooser.this, uri);
         }
+        /*
+         * Restores overscroll drawable to default, in order to ensure
+         * theme's overscroll takes preference over user's custom one.
+         */
+        Settings.System.putInt(getApplicationContext().getContentResolver(),
+                Settings.System.OVERSCROLL_COLOR,0);
     }
 
     private static class ThemeChooserAdapter extends ThemeAdapter {
